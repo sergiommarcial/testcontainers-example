@@ -1,0 +1,20 @@
+DROP
+    SCHEMA IF EXISTS test;
+
+DROP
+    TABLE
+        IF EXISTS test.example;
+
+CREATE
+    SCHEMA IF NOT EXISTS test;
+
+CREATE
+    TABLE
+        IF NOT EXISTS test.example(
+            ID BIGINT PRIMARY KEY,
+            MESSAGE VARCHAR NOT NULL,
+            CREATED_TIMESTAMP TIMESTAMP WITH TIME ZONE DEFAULT now()
+        );
+
+CREATE
+    SEQUENCE test.example_seq AS BIGINT MAXVALUE 9223372036854775807 OWNED BY test.example.ID;

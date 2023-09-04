@@ -1,0 +1,46 @@
+spring:
+  application:
+    name: "testcontainer example"
+
+  datasource:
+    url: ${POSTGRES_URL:postgres://localhost:5432/example}
+    username: ${POSTGRES_USERNAME:postgres}
+    password: ${POSTGRES_PASSWORD:postgres}
+    hikari:
+      # Hikari will use the above plus the following to setup connection pooling
+      minimumIdle: 5
+      maximumPoolSize: 20
+      idleTimeout: 30000
+      poolName: SpringBootJPAHikariCP
+      maxLifetime: 2000000
+      connectionTimeout: 30000
+      schema: test
+    type: com.zaxxer.hikari.HikariDataSource
+    driver-class-name: org.postgresql.Driver
+
+  jpa:
+    properties:
+      # JPA specific configs
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        show_sql: true
+        format_sql: true
+        use_sql: true
+        id:
+          new_generator_mappings: false
+        default_schema: test
+        search:
+          autoregister_listeners: false
+        bytecode:
+          use_reflection_optimizer: false
+
+server:
+  compression:
+    min-response-size: 1KB
+    enabled: true
+  servlet:
+    context-path: /test-example/v1
+
+logging:
+  level:
+    com.zaxxer.hikari.HikariConfig: DEBUG
